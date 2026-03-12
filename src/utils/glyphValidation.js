@@ -23,7 +23,7 @@ export function normalizeSegment([a, b]) {
 export function isValidSegment(seg, allSegs = ALL_SEGS) {
   const norm = normalizeSegment(seg);
   return allSegs.some(
-    ([x, y]) => normalizeSegment([x, y]).join("-") === norm.join("-")
+    ([x, y]) => normalizeSegment([x, y]).join("-") === norm.join("-"),
   );
 }
 
@@ -40,8 +40,7 @@ export function validateGlyph(g, allSegs = ALL_SEGS) {
   // Check required fields
   if (!g.name) errors.push("Missing name");
   if (!g.type) errors.push("Missing type");
-  if (!g.segs || !Array.isArray(g.segs))
-    errors.push("Missing or invalid segs");
+  if (!g.segs || !Array.isArray(g.segs)) errors.push("Missing or invalid segs");
   if (!g.bn) errors.push("Missing breath node (bn)");
   if (!g.ipa) errors.push("Missing IPA");
 
@@ -136,13 +135,13 @@ export function validateAllGlyphs() {
   if (duplicates.length > 0) {
     console.warn(
       `  ⚠ Found ${duplicates.length} duplicate glyph geometries:`,
-      duplicates
+      duplicates,
     );
   }
 
   const validCount = validationResults.filter((r) => r.valid).length;
   console.log(
-    `✓ Validation complete: ${validCount}/${CONS.length} glyphs valid, ${totalErrors} errors`
+    `✓ Validation complete: ${validCount}/${CONS.length} glyphs valid, ${totalErrors} errors`,
   );
   console.groupEnd();
 

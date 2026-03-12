@@ -1,19 +1,19 @@
-import React, { useContext } from 'react';
-import { THEME, NODE_KEYS, ALL_SEGS } from '../../constants';
-import { GridContext } from '../../context';
-import { buildPath, getStrokeOrder } from '../../utils';
+import React, { useContext } from "react";
+import { THEME, NODE_KEYS, ALL_SEGS } from "../../constants";
+import { GridContext } from "../../context";
+import { buildPath, getStrokeOrder } from "../../utils";
 
 /**
  * GlyphSVG Component
  * Core glyph renderer using grid from context
- * 
+ *
  * Features:
  * - Renders glyph segments from grid context
  * - Supports animation with stroke order
  * - Vowel modifiers (i, a, u)
  * - Breath markers (up, down, hold)
  * - Multiple styling modes (cursive, handwriting)
- * 
+ *
  * Props:
  * - segs: array of [nodeA, nodeB] segment pairs
  * - type: glyph type (sibilant, plosive, resonant, vowel)
@@ -120,7 +120,7 @@ export function GlyphSVG({
         (() => {
           // Simple vowel markers: dot, loop, or curve
           const vowelColor = THEME.accentVowel;
-          if (vowel === 'i') {
+          if (vowel === "i") {
             return (
               <circle
                 cx={grid.BC[0]}
@@ -129,7 +129,7 @@ export function GlyphSVG({
                 fill={vowelColor}
               />
             );
-          } else if (vowel === 'a') {
+          } else if (vowel === "a") {
             return (
               <circle
                 cx={grid.MC[0]}
@@ -139,7 +139,7 @@ export function GlyphSVG({
                 fillOpacity={0.5}
               />
             );
-          } else if (vowel === 'u') {
+          } else if (vowel === "u") {
             return (
               <path
                 d={`M${grid.TC[0] - 5} ${grid.TC[1] - 5} Q${grid.TC[0]} ${grid.TC[1] - 10} ${grid.TC[0] + 5} ${grid.TC[1] - 5}`}
@@ -153,7 +153,7 @@ export function GlyphSVG({
         })()}
 
       {/* Breath marker */}
-      {breath === 'up' &&
+      {breath === "up" &&
         bn &&
         (() => {
           const [bx, by] = grid[bn];
@@ -181,7 +181,7 @@ export function GlyphSVG({
             </g>
           );
         })()}
-      {breath === 'down' &&
+      {breath === "down" &&
         bn &&
         (() => {
           const [bx, by] = grid[bn];
@@ -196,7 +196,7 @@ export function GlyphSVG({
             />
           );
         })()}
-      {breath === 'hold' &&
+      {breath === "hold" &&
         bn &&
         (() => {
           const [bx, by] = grid[bn];

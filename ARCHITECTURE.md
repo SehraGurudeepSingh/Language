@@ -93,40 +93,48 @@ src/
 ## Design Principles
 
 ### 1. **Single Responsibility**
+
 Each file/module has one clear purpose:
+
 - Components handle UI rendering
 - Utils handle business logic
 - Constants define data
 - Hooks manage side effects
 
 ### 2. **Separation of Concerns**
+
 - **Presentation** (Components): React JSX, event handlers, styling
 - **State Management** (Context + Hooks): Grid state, active segments
 - **Business Logic** (Utils): Validation, evolution, genome encoding
 - **Configuration** (Constants): Theme, phonetics, grid setup
 
 ### 3. **Barrel Exports**
+
 Each directory has an `index.js`:
+
 ```js
 // Bad:
-import { GlyphSVG } from '../../components/GlyphSVG/GlyphSVG'
+import { GlyphSVG } from "../../components/GlyphSVG/GlyphSVG";
 
 // Good:
-import { GlyphSVG } from '../../components'
+import { GlyphSVG } from "../../components";
 ```
 
 ### 4. **Minimal Dependencies**
+
 - Components import from context + utils + constants
 - Utils are pure (no React dependencies)
 - Constants have no dependencies
 - Hooks import from context + utils
 
 ### 5. **Testability**
-Pure utility functions are easy to test:
-```js
-import { validateGlyph } from '../utils';
 
-test('validateGlyph detects missing fields', () => {
+Pure utility functions are easy to test:
+
+```js
+import { validateGlyph } from "../utils";
+
+test("validateGlyph detects missing fields", () => {
   const result = validateGlyph({ name: "S" });
   expect(result.valid).toBe(false);
   expect(result.errors.length).toBeGreaterThan(0);
@@ -138,38 +146,44 @@ test('validateGlyph detects missing fields', () => {
 ## File Responsibilities
 
 ### Constants
-| File | Exports | Purpose |
-|------|---------|---------|
-| `theme.js` | THEME | Color palette, visual constants |
-| `grid.js` | NODE_KEYS, ALL_SEGS, DEFAULT_GRID | Grid layout |
-| `glyphs.js` | CONS, BY_NUM, BY_NAME | 24 consonant glyphs |
-| `phonetics.js` | PHONETIC_CORES, SUBSETS, VARIANTS, LATIN_TO_GLYPH | Language structure |
-| `genome.js` | GENOME_BITS, EDGE_TYPES | Glyph encoding |
+
+| File           | Exports                                           | Purpose                         |
+| -------------- | ------------------------------------------------- | ------------------------------- |
+| `theme.js`     | THEME                                             | Color palette, visual constants |
+| `grid.js`      | NODE_KEYS, ALL_SEGS, DEFAULT_GRID                 | Grid layout                     |
+| `glyphs.js`    | CONS, BY_NUM, BY_NAME                             | 24 consonant glyphs             |
+| `phonetics.js` | PHONETIC_CORES, SUBSETS, VARIANTS, LATIN_TO_GLYPH | Language structure              |
+| `genome.js`    | GENOME_BITS, EDGE_TYPES                           | Glyph encoding                  |
 
 ### Utils
-| File | Key Exports | Purpose |
-|------|-------------|---------|
-| `glyphValidation.js` | validateGlyph, validateAllGlyphs, findDuplicateGlyphs | Data integrity |
-| `glyphGenome.js` | encodeGenome, decodeGenome | Compact glyph representation |
-| `pathBuilding.js` | buildPath, getStrokeOrder | SVG path generation |
-| `glyphEvolution.js` | evolveGlyphs, generateRandomGlyph, isConnected | Procedural generation |
-| `helpers.js` | spiralPositions, semanticToGlyphs | Layout + semantic mapping |
-| `segments.js` | normalizeSegment, SEGMENT_LOOKUP | Fast segment validation |
+
+| File                 | Key Exports                                           | Purpose                      |
+| -------------------- | ----------------------------------------------------- | ---------------------------- |
+| `glyphValidation.js` | validateGlyph, validateAllGlyphs, findDuplicateGlyphs | Data integrity               |
+| `glyphGenome.js`     | encodeGenome, decodeGenome                            | Compact glyph representation |
+| `pathBuilding.js`    | buildPath, getStrokeOrder                             | SVG path generation          |
+| `glyphEvolution.js`  | evolveGlyphs, generateRandomGlyph, isConnected        | Procedural generation        |
+| `helpers.js`         | spiralPositions, semanticToGlyphs                     | Layout + semantic mapping    |
+| `segments.js`        | normalizeSegment, SEGMENT_LOOKUP                      | Fast segment validation      |
 
 ### Context
-| File | Purpose |
-|------|---------|
+
+| File              | Purpose                                                 |
+| ----------------- | ------------------------------------------------------- |
 | `GridContext.jsx` | Provides grid state + active segments to all components |
 
 ### Hooks
-| File | Purpose | Usage |
-|------|---------|-------|
-| `useGlyphValidation.js` | Validate glyphs on mount | `const validation = useGlyphValidation()` |
-| `useOpenType.js` | Load OpenType.js library | `useOpenType()` |
-| `useGlyphEvolution.js` | Manage glyph evolution state | `const [evolved, evolve] = useGlyphEvolution()` |
+
+| File                    | Purpose                      | Usage                                           |
+| ----------------------- | ---------------------------- | ----------------------------------------------- |
+| `useGlyphValidation.js` | Validate glyphs on mount     | `const validation = useGlyphValidation()`       |
+| `useOpenType.js`        | Load OpenType.js library     | `useOpenType()`                                 |
+| `useGlyphEvolution.js`  | Manage glyph evolution state | `const [evolved, evolve] = useGlyphEvolution()` |
 
 ### Components
+
 Each component folder has:
+
 - `ComponentName.jsx` – React component
 - `ComponentName.module.css` – Scoped styles (optional)
 - `index.js` – Clean export
@@ -211,26 +225,28 @@ GlyphSVG (uses context + props)
 ## Import Patterns
 
 ### Good Imports ✓
+
 ```jsx
 // From barrel exports
-import { GlyphSVG, GridEditor } from '../components';
-import { CONS, THEME } from '../constants';
-import { validateGlyph, evolveGlyphs } from '../utils';
-import { useGlyphValidation } from '../hooks';
-import { GridContext } from '../context';
+import { GlyphSVG, GridEditor } from "../components";
+import { CONS, THEME } from "../constants";
+import { validateGlyph, evolveGlyphs } from "../utils";
+import { useGlyphValidation } from "../hooks";
+import { GridContext } from "../context";
 
 // Direct for rarely-used items
-import { isConnected } from '../utils/glyphEvolution';
+import { isConnected } from "../utils/glyphEvolution";
 ```
 
 ### Bad Imports ✗
+
 ```jsx
 // Avoid deep paths
-import GlyphSVG from '../../../components/GlyphSVG/GlyphSVG';
+import GlyphSVG from "../../../components/GlyphSVG/GlyphSVG";
 
 // Avoid importing from utils in constants
-import { CONS } from '../constants/glyphs'; // OK
-import { validateGlyph } from '../utils/glyphValidation'; // OK
+import { CONS } from "../constants/glyphs"; // OK
+import { validateGlyph } from "../utils/glyphValidation"; // OK
 // but NOT: import { CONS } from '../utils'; // breaks layering
 
 // Don't import components in utils
@@ -263,7 +279,7 @@ import { validateGlyph } from '../utils/glyphValidation'; // OK
 ✓ Easy to share code (barrel exports)  
 ✓ Easy to onboard new developers (clear structure)  
 ✓ Easy to refactor (change implementation, not APIs)  
-✓ Easy to optimize (split code by route)  
+✓ Easy to optimize (split code by route)
 
 ---
 

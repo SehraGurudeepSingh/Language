@@ -9,23 +9,25 @@ Your code audit identified **4 categories of issues**. All have been systematica
 ## Category 1: Hard Errors ✅ FIXED
 
 ### Issue 1.1: Incomplete LATIN_TO_GLYPH Mapping
+
 **Problem**: Only mapped 19/24 glyphs. Missing: SH, ZH, TH, DH, NG
 
-**Solution**: 
+**Solution**:
+
 ```js
 const LATIN_TO_GLYPH = {
   // ... existing mappings ...
-  x: "SH",      // sh sound
+  x: "SH", // sh sound
   sh: "SH",
   SH: "SH",
-  v: "ZH",      // zh sound
+  v: "ZH", // zh sound
   zh: "ZH",
   ZH: "ZH",
-  th: "TH",     // th sound
+  th: "TH", // th sound
   TH: "TH",
-  dh: "DH",     // dh sound
+  dh: "DH", // dh sound
   DH: "DH",
-  ng: "NG",     // ng sound
+  ng: "NG", // ng sound
   NG: "NG",
 };
 ```
@@ -35,15 +37,18 @@ const LATIN_TO_GLYPH = {
 ---
 
 ### Issue 1.2: IPA String Parsing (Runtime Break Risk)
+
 **Problem**: Split string in glyph #11 could break minification
 
 **Original**:
+
 ```js
 ipa: "/b
 /",
 ```
 
 **Current**: ✅ Already intact in current file
+
 ```js
 ipa: "/b/",
 ```
@@ -53,14 +58,16 @@ ipa: "/b/",
 ---
 
 ### Issue 1.3: Segment Validation Not Enforced
+
 **Problem**: No check that glyph segments exist in ALL_SEGS
 
 **Solution**:
+
 ```js
 function isValidSegment(seg, allSegs = ALL_SEGS) {
   const norm = normalizeSegment(seg);
   return allSegs.some(
-    ([x, y]) => normalizeSegment([x, y]).join("-") === norm.join("-")
+    ([x, y]) => normalizeSegment([x, y]).join("-") === norm.join("-"),
   );
 }
 ```
@@ -72,14 +79,17 @@ function isValidSegment(seg, allSegs = ALL_SEGS) {
 ## Category 2: Logical Design Issues ✅ FIXED
 
 ### Issue 2.1: bn (Breath Node) Not Validated
+
 **Problem**: Glyph breath node might not connect to any segment
 
 **Example Issue**:
+
 ```js
-bn: "MC"  // but no segs touch MC
+bn: "MC"; // but no segs touch MC
 ```
 
 **Solution**:
+
 ```js
 // In validateGlyph():
 if (g.segs && g.bn) {
@@ -95,15 +105,18 @@ if (g.segs && g.bn) {
 ---
 
 ### Issue 2.2: Duplicate Geometry Across Glyphs
+
 **Problem**: Same segment combinations = visual duplicates
 
 **Example**:
+
 ```
 B: [["ML","MC"], ["MC","BC"]]
 DH: [["ML","MC"], ["MC","BC"]]  // IDENTICAL
 ```
 
 **Solution**:
+
 ```js
 function glyphKey(segs) {
   if (!segs || segs.length === 0) return "";
@@ -119,14 +132,17 @@ function findDuplicateGlyphs(glyphList) {
 ```
 
 **Status**: ✅ Implemented + exposed in debug interface
+
 - Current result: **0 duplicates** (all unique ✓)
 
 ---
 
 ### Issue 2.3: Grid Coordinates Not Centrally Defined
+
 **Problem**: Grid assumed but coordinates only in state
 
 **Solution**: Added to constants section:
+
 ```js
 // Grid coordinates defined in:
 // 1. Initial state in component
@@ -141,23 +157,26 @@ function findDuplicateGlyphs(glyphList) {
 ## Category 3: Data Consistency Problems ✅ FIXED
 
 ### Issue 3.1: Segment Orientation Inconsistent
+
 **Problem**: `["ML","BL"]` vs `["BL","ML"]` treated as different
 
 **Original Code Issue**:
+
 ```js
 // No normalization → equality checks fail
-["ML","BL"] !== ["BL","ML"]  // true (bad!)
+["ML", "BL"] !== ["BL", "ML"]; // true (bad!)
 ```
 
 **Solution**:
+
 ```js
 function normalizeSegment([a, b]) {
   return a < b ? [a, b] : [b, a];
 }
 
 // Now:
-normalizeSegment(["ML","BL"]).join("-") === 
-normalizeSegment(["BL","ML"]).join("-")  // true ✓
+normalizeSegment(["ML", "BL"]).join("-") ===
+  normalizeSegment(["BL", "ML"]).join("-"); // true ✓
 ```
 
 **Status**: ✅ Implemented globally + used in all comparisons
@@ -165,15 +184,18 @@ normalizeSegment(["BL","ML"]).join("-")  // true ✓
 ---
 
 ### Issue 3.2: Breath System Redundancy
+
 **Problem**: Breath defined in both PHONETIC_CORES and individual glyphs
 
 **Original Design**:
+
 ```js
 PHONETIC_CORES.sibilant.breath = "up"
 + glyph.breath = "up"  // redundant
 ```
 
 **Current Approach**:
+
 - PHONETIC_CORES defines default
 - Individual glyphs can override
 - Validation ensures consistency
@@ -183,9 +205,11 @@ PHONETIC_CORES.sibilant.breath = "up"
 ---
 
 ### Issue 3.3: Subsets Truncation
+
 **Problem**: You reported SUBSETS "cuts off mid-string"
 
 **Current State**: ✅ Complete
+
 ```js
 const SUBSETS = {
   sibilant: [
@@ -195,7 +219,7 @@ const SUBSETS = {
     "labiodental",
     "palatal",
     "lateral",
-    "affricate",  // 7 items ✓
+    "affricate", // 7 items ✓
   ],
   plosive: [
     "bilabial",
@@ -204,7 +228,7 @@ const SUBSETS = {
     "retroflex",
     "velar",
     "uvular",
-    "glottal",  // 7 items ✓
+    "glottal", // 7 items ✓
   ],
   resonant: [
     "bilabial nasal",
@@ -213,7 +237,7 @@ const SUBSETS = {
     "liquids",
     "glides",
     "lateral",
-    "rhotic",  // 7 items ✓
+    "rhotic", // 7 items ✓
   ],
 };
 ```
@@ -225,20 +249,21 @@ const SUBSETS = {
 ## Category 4: Performance & Architecture ✅ OPTIMIZED
 
 ### Issue 4.1: No Precomputed Lookups
+
 **Problem**: Inefficient `.find()` calls (O(n))
 
 **Before**:
+
 ```js
-CONS.find((g) => g.name === "S")  // O(n) linear search
+CONS.find((g) => g.name === "S"); // O(n) linear search
 ```
 
 **After**:
-```js
-const BY_NAME = Object.fromEntries(
-  CONS.map((c) => [c.name, c])
-);
 
-BY_NAME["S"]  // O(1) map lookup
+```js
+const BY_NAME = Object.fromEntries(CONS.map((c) => [c.name, c]));
+
+BY_NAME["S"]; // O(1) map lookup
 ```
 
 **Status**: ✅ BY_NAME map created + frozen
@@ -246,9 +271,11 @@ BY_NAME["S"]  // O(1) map lookup
 ---
 
 ### Issue 4.2: Mutable Constants
+
 **Problem**: CONS could be accidentally modified
 
 **Solution**:
+
 ```js
 Object.freeze(CONS);
 Object.freeze(BY_NUM);
@@ -261,22 +288,23 @@ Object.freeze(ALL_SEGS);
 ---
 
 ### Issue 4.3: No Segment Lookup Optimization
+
 **Problem**: Validating segments always scans ALL_SEGS
 
 **Before**:
+
 ```js
 // O(n) scan through ALL_SEGS
 ALL_SEGS.some(([x,y]) => ...)
 ```
 
 **After**:
+
 ```js
-const SEGMENT_LOOKUP = new Set(
-  ALL_SEGS_NORMALIZED.map((seg) => seg.join("-"))
-);
+const SEGMENT_LOOKUP = new Set(ALL_SEGS_NORMALIZED.map((seg) => seg.join("-")));
 
 // O(1) set membership
-SEGMENT_LOOKUP.has("ML-BL")  // instant
+SEGMENT_LOOKUP.has("ML-BL"); // instant
 ```
 
 **Status**: ✅ Precomputed SEGMENT_LOOKUP set
@@ -286,6 +314,7 @@ SEGMENT_LOOKUP.has("ML-BL")  // instant
 ## Category 5: Additional Improvements ✅ ADDED
 
 ### 5.1: Comprehensive Validation Function
+
 ```js
 function validateGlyph(g, allSegs = ALL_SEGS) {
   // Checks:
@@ -295,7 +324,7 @@ function validateGlyph(g, allSegs = ALL_SEGS) {
   // ✓ Valid segments
   // ✓ Valid breath node
   // ✓ Connected breath node
-  
+
   return { valid: boolean, errors: string[] }
 }
 ```
@@ -305,7 +334,9 @@ function validateGlyph(g, allSegs = ALL_SEGS) {
 ---
 
 ### 5.2: Startup Validation Report
+
 Called in `useEffect` on app mount:
+
 ```js
 function validateAllGlyphs() {
   // Runs complete validation
@@ -315,6 +346,7 @@ function validateAllGlyphs() {
 ```
 
 **Console Output**:
+
 ```
 🔍 GLYPH VALIDATION REPORT
 ✓ Validation complete: 24/24 glyphs valid, 0 errors
@@ -325,7 +357,9 @@ function validateAllGlyphs() {
 ---
 
 ### 5.3: Debug Interface
+
 All validation data exposed at:
+
 ```js
 window._GLYPH_DEBUG = {
   CONS,
@@ -335,7 +369,7 @@ window._GLYPH_DEBUG = {
   findDuplicateGlyphs,
   allValidationResults,
   duplicates,
-}
+};
 ```
 
 **Status**: ✅ Available in browser console
@@ -345,6 +379,7 @@ window._GLYPH_DEBUG = {
 ## Final Validation Report
 
 ### Glyph System Health
+
 ```
 Total glyphs:        24
 Valid glyphs:        24/24 (100%)
@@ -353,6 +388,7 @@ Duplicates found:    0
 ```
 
 ### Data Structures
+
 ```
 Immutable constants: ✓
 BY_NAME lookup:      ✓
@@ -362,6 +398,7 @@ Fast validation:     ✓
 ```
 
 ### Code Quality
+
 ```
 Concept:      9/10 ✓
 Structure:    9/10 ✓ (was 7/10)
@@ -373,26 +410,32 @@ Robustness:   9/10 ✓ (was 5/10)
 ## Recommendations for Future
 
 ### 1. Bit-Encoded Glyphs (Optional)
+
 Consider 16-bit genome encoding:
+
 ```js
-glyphID = (core*63) + (subset*9) + variant
+glyphID = core * 63 + subset * 9 + variant;
 // Would enable: procedural generation, compact storage, grammar engine
 ```
 
 ### 2. Vowel System
+
 Add vowel overlays to current consonant system:
+
 ```js
 const VOWELS = [
-  {mark: "i", position: "high", marker: "dot"},
-  {mark: "a", position: "open", marker: "circle"},
-  {mark: "u", position: "rounded", marker: "ring"},
-]
+  { mark: "i", position: "high", marker: "dot" },
+  { mark: "a", position: "open", marker: "circle" },
+  { mark: "u", position: "rounded", marker: "ring" },
+];
 ```
 
 ### 3. Periodic Health Checks
+
 Consider adding in development mode:
+
 ```js
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
   validateAllGlyphs();
 }
 ```
@@ -415,7 +458,7 @@ if (process.env.NODE_ENV === 'development') {
 ✅ Data consistency ensured  
 ✅ Performance optimized  
 ✅ Robustness increased (5→9)  
-✅ Debug interface added  
+✅ Debug interface added
 
 **Your glyph system is now production-ready and maintainable.**
 

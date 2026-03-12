@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { CONS, LATIN_TO_GLYPH } from '../../constants';
-import { GridContext } from '../../context';
-import { spiralPositions } from '../../utils';
-import { GlyphSVG } from '../GlyphSVG';
+import React, { useContext } from "react";
+import { CONS, LATIN_TO_GLYPH } from "../../constants";
+import { GridContext } from "../../context";
+import { spiralPositions } from "../../utils";
+import { GlyphSVG } from "../GlyphSVG";
 
 /**
  * Renders a word at a specific position
@@ -18,7 +18,7 @@ function renderWordAt(x, y, glyphs, cursive, handwriting, grid) {
     return [10 + 30, i * baseSpacing + 30 + 30];
   });
 
-  let connectorPath = '';
+  let connectorPath = "";
   if (connectorPoints.length > 1) {
     const [x0, y0] = connectorPoints[0];
     connectorPath = `M${x0} ${y0}`;
@@ -64,13 +64,13 @@ function renderWordAt(x, y, glyphs, cursive, handwriting, grid) {
 /**
  * WordDisplay Component
  * Renders words in various layouts (vertical, spiral)
- * 
+ *
  * Features:
  * - Vertical word layout
  * - Spiral word layout with connector path
  * - Automatic glyph lookup from Latin characters
  * - Cursive and handwriting modes
- * 
+ *
  * Props:
  * - word: string, word to display (Latin characters)
  * - cursive: boolean, apply cursive styling
@@ -82,12 +82,12 @@ export function WordDisplay({
   word,
   cursive,
   handwriting,
-  layout = 'vertical',
+  layout = "vertical",
   spiralSteps = 9,
 }) {
   const { grid } = useContext(GridContext);
   const glyphs = word
-    .split('')
+    .split("")
     .map((ch) => {
       const name = LATIN_TO_GLYPH[ch.toUpperCase()] || ch.toUpperCase();
       return CONS.find((g) => g.name === name) || null;
@@ -100,7 +100,7 @@ export function WordDisplay({
   const wordWidth = 120;
   const wordHeight = glyphs.length * baseSpacing + 40;
 
-  if (layout === 'vertical') {
+  if (layout === "vertical") {
     return (
       <svg
         width={wordWidth}
@@ -112,7 +112,7 @@ export function WordDisplay({
     );
   }
 
-  if (layout === 'spiral') {
+  if (layout === "spiral") {
     const positions = spiralPositions(spiralSteps);
     const margin = 50;
     const xs = positions.map((p) => p.x * wordWidth);
@@ -122,7 +122,7 @@ export function WordDisplay({
     const minY = Math.min(...ys) - margin;
     const maxY = Math.max(...ys) + wordHeight + margin;
 
-    let connectorPath = '';
+    let connectorPath = "";
     if (positions.length > 1) {
       const startX = positions[0].x * wordWidth + wordWidth / 2;
       const startY = positions[0].y * wordHeight + wordHeight / 2;

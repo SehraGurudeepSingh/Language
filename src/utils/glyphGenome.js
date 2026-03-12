@@ -37,7 +37,8 @@ export function encodeGenome(glyph) {
   // edge mask – simple: all edges used are set
   let edgeMask = 0;
   glyph.segs.forEach(([a, b]) => {
-    const edgeIndex = Math.abs(NODE_KEYS.indexOf(a) - NODE_KEYS.indexOf(b)) %
+    const edgeIndex =
+      Math.abs(NODE_KEYS.indexOf(a) - NODE_KEYS.indexOf(b)) %
       GENOME_BITS.edgeMask.bits;
     edgeMask |= 1 << edgeIndex;
   });
@@ -67,7 +68,7 @@ export function decodeGenome(genome, grid) {
 
   return {
     segs: ALL_SEGS.filter(
-      ([a, b]) => activeNodes.includes(a) && activeNodes.includes(b)
+      ([a, b]) => activeNodes.includes(a) && activeNodes.includes(b),
     ),
     type: core === 1 ? "sibilant" : core === 2 ? "plosive" : "resonant",
     color:

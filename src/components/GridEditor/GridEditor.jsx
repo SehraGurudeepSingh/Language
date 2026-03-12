@@ -1,17 +1,17 @@
-import React, { useState, useContext } from 'react';
-import { THEME, NODE_KEYS, ALL_SEGS } from '../../constants';
-import { GridContext } from '../../context';
+import React, { useState, useContext } from "react";
+import { THEME, NODE_KEYS, ALL_SEGS } from "../../constants";
+import { GridContext } from "../../context";
 
 /**
  * GridEditor Component
  * Master grid editor with segment toggling and coordinate control
- * 
+ *
  * Features:
  * - Interactive node selection and segment toggling
  * - Visual segment feedback (active/inactive)
  * - Numeric inputs for precise coordinate control
  * - Show All / Clear All buttons
- * 
+ *
  * Props: None (reads from GridContext)
  */
 export function GridEditor() {
@@ -64,12 +64,12 @@ export function GridEditor() {
         Click nodes to toggle segments. Use numeric inputs to adjust positions.
         All glyphs update instantly.
       </p>
-      <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+      <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
         <svg
           width="300"
           height="300"
           viewBox="-10 -10 80 80"
-          style={{ background: '#111', borderRadius: 4, cursor: 'crosshair' }}
+          style={{ background: "#111", borderRadius: 4, cursor: "crosshair" }}
         >
           {/* Grid lines - only active segments */}
           {activeSegs.map(([a, b], i) => (
@@ -95,8 +95,8 @@ export function GridEditor() {
                 y1={grid[a][1]}
                 x2={grid[b][0]}
                 y2={grid[b][1]}
-                stroke={isActive ? 'transparent' : 'rgba(255,255,255,0.1)'}
-                strokeWidth={isActive ? '0' : '0.5'}
+                stroke={isActive ? "transparent" : "rgba(255,255,255,0.1)"}
+                strokeWidth={isActive ? "0" : "0.5"}
               />
             );
           })}
@@ -107,10 +107,10 @@ export function GridEditor() {
               cx={grid[k][0]}
               cy={grid[k][1]}
               r="4"
-              fill={selectedNode === k ? '#fff' : 'rgba(255,255,255,0.4)'}
+              fill={selectedNode === k ? "#fff" : "rgba(255,255,255,0.4)"}
               stroke="#fff"
               strokeWidth="1"
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
               onClick={() => handleNodeClick(k)}
             />
           ))}
@@ -122,12 +122,12 @@ export function GridEditor() {
             <button
               onClick={() => setActiveSegs(ALL_SEGS.map(([a, b]) => [a, b]))}
               style={{
-                background: 'transparent',
+                background: "transparent",
                 border: THEME.border,
-                color: '#fff',
-                padding: '4px 12px',
-                cursor: 'pointer',
-                width: '100%',
+                color: "#fff",
+                padding: "4px 12px",
+                cursor: "pointer",
+                width: "100%",
               }}
             >
               Show All
@@ -137,12 +137,12 @@ export function GridEditor() {
             <button
               onClick={() => setActiveSegs([])}
               style={{
-                background: 'transparent',
+                background: "transparent",
                 border: THEME.border,
-                color: '#fff',
-                padding: '4px 12px',
-                cursor: 'pointer',
-                width: '100%',
+                color: "#fff",
+                padding: "4px 12px",
+                cursor: "pointer",
+                width: "100%",
               }}
             >
               Clear All
@@ -151,7 +151,7 @@ export function GridEditor() {
           <div
             style={{
               marginBottom: 12,
-              borderTop: '1px solid rgba(255,255,255,0.1)',
+              borderTop: "1px solid rgba(255,255,255,0.1)",
               paddingTop: 12,
             }}
           >
@@ -159,7 +159,7 @@ export function GridEditor() {
               style={{
                 fontSize: 9,
                 color: THEME.textMuted,
-                display: 'block',
+                display: "block",
                 marginBottom: 4,
               }}
             >
@@ -172,11 +172,11 @@ export function GridEditor() {
       {/* Numeric inputs for precise grid control */}
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
           gap: 8,
           marginTop: 12,
-          borderTop: '1px solid rgba(255,255,255,0.1)',
+          borderTop: "1px solid rgba(255,255,255,0.1)",
           paddingTop: 12,
         }}
       >
@@ -194,9 +194,9 @@ export function GridEditor() {
               }
               style={{
                 width: 50,
-                background: '#222',
-                color: '#fff',
-                border: 'none',
+                background: "#222",
+                color: "#fff",
+                border: "none",
                 marginRight: 4,
                 fontSize: 9,
               }}
@@ -212,9 +212,9 @@ export function GridEditor() {
               }
               style={{
                 width: 50,
-                background: '#222',
-                color: '#fff',
-                border: 'none',
+                background: "#222",
+                color: "#fff",
+                border: "none",
                 fontSize: 9,
               }}
             />

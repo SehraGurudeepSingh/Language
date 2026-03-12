@@ -1,2 +1,2 @@
-export { GlyphSVG } from './GlyphSVG';
-export { default } from './GlyphSVG';
+export { GlyphSVG } from "./GlyphSVG";
+export { default } from "./GlyphSVG";

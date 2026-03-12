@@ -12,12 +12,10 @@ export function normalizeSegment([a, b]) {
   return a < b ? [a, b] : [b, a];
 }
 
-export const ALL_SEGS_NORMALIZED = ALL_SEGS.map((seg) =>
-  normalizeSegment(seg)
-);
+export const ALL_SEGS_NORMALIZED = ALL_SEGS.map((seg) => normalizeSegment(seg));
 
 export const SEGMENT_LOOKUP = new Set(
-  ALL_SEGS_NORMALIZED.map((seg) => seg.join("-"))
+  ALL_SEGS_NORMALIZED.map((seg) => seg.join("-")),
 );
 
 /**

@@ -3,3 +3,4 @@
  */
 
 export { GridContext, GridContextProvider } from "./GridContext";
+export { ThemeContext, ThemeProvider } from "./ThemeContext";
