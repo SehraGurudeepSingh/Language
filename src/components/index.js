@@ -6,6 +6,7 @@ export { default as AnimatedGlyph } from "./AnimatedGlyph";
 export { default as KeyboardLayout } from "./KeyboardLayout";
 export { default as ThemeToggle } from "./ThemeToggle";
 export { default as Dashboard } from "./Dashboard";
+export { default as Navigation } from "./Navigation";
 
 // Future exports:
 // export { default as EvolutionEngine } from './EvolutionEngine';

@@ -1,11 +1,11 @@
 /**
  * Typography System
- * Font Stack with Geometric Logo Font and Serif/Sans-Serif Balance
+ * Font Stack with Elegant Humanist Geometric Logo Font
  *
- * Primary Font: Montserrat (geometric sans-serif)
- * Logo Font: Space Mono (geometric monospace)
- * Serif Font: Merriweather or Lora (for body copy with character)
- * Icon Font: Feather Icons (via CSS)
+ * Logo Font: Jost (humanist geometric - elegant, futuristic, clean)
+ * Primary Font: DM Sans (modern sans-serif for UI)
+ * Body Font: DM Sans (clean, readable)
+ * Monospace: JetBrains Mono (for code/technical)
  */
 
 // ============================================================================
@@ -13,20 +13,17 @@
 // ============================================================================
 
 export const FONTS = {
-  // Main body and UI text (geometric sans-serif)
-  // Montserrat: Clean, modern, geometric - ideal for UI and headers
-  primary: "'Montserrat', 'Segoe UI', 'Helvetica Neue', sans-serif",
+  // Logo and brand text (Jost - humanist geometric, elegant)
+  logo: "'Jost', 'Inter', sans-serif",
 
-  // Logo and decorative text (geometric monospace)
-  // Space Mono: Geometric, tech-forward monospace - perfect for logo/brand
-  logo: "'Space Mono', 'IBM Plex Mono', monospace",
+  // Main body and UI text (DM Sans - modern, clean)
+  primary: "'DM Sans', 'Segoe UI', 'Helvetica Neue', sans-serif",
 
-  // Body copy and long-form content (humanist serif)
-  // Merriweather: Warm, readable serif with character - great for description text
-  serif: "'Merriweather', 'Georgia', serif",
+  // Body copy and long-form content
+  body: "'DM Sans', 'Georgia', serif",
 
   // Fallback for code and technical text
-  mono: "'Courier New', 'Courier', monospace",
+  mono: "'JetBrains Mono', 'Fira Code', monospace",
 
   // System font stack (fastest loading, no web font needed)
   system:
@@ -48,22 +45,22 @@ export const FONT_WEIGHTS = {
 };
 
 // ============================================================================
-// FONT SIZES (based on 16px base, using 1.125 scale for harmonious progression)
+// FONT SIZES (based on 16px base, using 1.25 scale for dramatic progression)
 // ============================================================================
 
 export const FONT_SIZES = {
-  // Headings (using geometric progression: 1.125 ratio = golden ratio approximation)
+  // Headings (using geometric progression: 1.25 ratio)
   xs: "0.75rem", // 12px
   sm: "0.875rem", // 14px
   base: "1rem", // 16px
   lg: "1.125rem", // 18px
   xl: "1.25rem", // 20px
-  "2xl": "1.5rem", // 24px (1.125 ^ 2 ≈ 1.27, adjusted)
+  "2xl": "1.5rem", // 24px
   "3xl": "1.875rem", // 30px
   "4xl": "2.25rem", // 36px
-  "5xl": "2.813rem", // 45px
-  "6xl": "3.375rem", // 54px
-  "7xl": "4.219rem", // 67px (using golden ratio: 1.618 step)
+  "5xl": "3rem", // 48px
+  "6xl": "3.75rem", // 60px
+  "7xl": "4.5rem", // 72px (hero text)
 };
 
 // ============================================================================
@@ -95,16 +92,25 @@ export const LETTER_SPACING = {
 // ============================================================================
 
 export const TYPOGRAPHY = {
-  // Logo typography (Space Mono, largest)
+  // Logo typography (Jost - elegant, futuristic)
   logo: {
     fontFamily: FONTS.logo,
     fontSize: FONT_SIZES["5xl"],
-    fontWeight: FONT_WEIGHTS.bold,
+    fontWeight: FONT_WEIGHTS.semibold,
     lineHeight: LINE_HEIGHTS.tight,
     letterSpacing: LETTER_SPACING.wide,
   },
 
-  // Heading 1 (Montserrat)
+  // Hero text (Jost - largest display)
+  hero: {
+    fontFamily: FONTS.logo,
+    fontSize: FONT_SIZES["7xl"],
+    fontWeight: FONT_WEIGHTS.bold,
+    lineHeight: 1.1,
+    letterSpacing: LETTER_SPACING.tight,
+  },
+
+  // Heading 1 (DM Sans)
   h1: {
     fontFamily: FONTS.primary,
     fontSize: FONT_SIZES["4xl"],
@@ -140,9 +146,9 @@ export const TYPOGRAPHY = {
     letterSpacing: LETTER_SPACING.normal,
   },
 
-  // Body text (Merriweather for warmth and readability)
+  // Body text (DM Sans for consistency)
   body: {
-    fontFamily: FONTS.serif,
+    fontFamily: FONTS.primary,
     fontSize: FONT_SIZES.base,
     fontWeight: FONT_WEIGHTS.regular,
     lineHeight: LINE_HEIGHTS.relaxed,
@@ -151,14 +157,14 @@ export const TYPOGRAPHY = {
 
   // Small body text
   bodySmall: {
-    fontFamily: FONTS.serif,
+    fontFamily: FONTS.primary,
     fontSize: FONT_SIZES.sm,
     fontWeight: FONT_WEIGHTS.regular,
     lineHeight: LINE_HEIGHTS.normal,
     letterSpacing: LETTER_SPACING.normal,
   },
 
-  // UI text (buttons, labels, form inputs - Montserrat)
+  // UI text (buttons, labels, form inputs - DM Sans)
   ui: {
     fontFamily: FONTS.primary,
     fontSize: FONT_SIZES.base,
@@ -180,7 +186,7 @@ export const TYPOGRAPHY = {
   caption: {
     fontFamily: FONTS.primary,
     fontSize: FONT_SIZES.xs,
-    fontWeight: FONT_WEIGHTS.light,
+    fontWeight: FONT_WEIGHTS.regular,
     lineHeight: LINE_HEIGHTS.tight,
     letterSpacing: LETTER_SPACING.wide,
   },
@@ -197,11 +203,10 @@ export const TYPOGRAPHY = {
 
 // ============================================================================
 // WEB FONT IMPORT (Google Fonts)
-// Add this to your HTML <head>:
-// <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;900&family=Space+Mono:wght@400;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+// Jost (logo), DM Sans (UI), JetBrains Mono (code)
 // ============================================================================
 
 export const GOOGLE_FONTS_URL =
-  "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;900&family=Space+Mono:wght@400;700&family=Merriweather:wght@300;400;700&display=swap";
+  "https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&family=Jost:opsz,wght@14..96,100..900&family=JetBrains+Mono:wght@100..800&display=swap";
 
 export default TYPOGRAPHY;

@@ -1,78 +1,89 @@
 /**
- * Advanced Color System with Golden Ratio
- * Uses 30-70-90 formula with golden ratio (1.618) for harmonious color progression
+ * Advanced Color System - Redesigned
+ * Modern palette with gradients and glassmorphism support
  *
  * Color philosophy:
- * - 30% Primary (dominant color - light grey, dark grey, or blue)
- * - 70% Secondary (complementary - provides balance)
- * - 90% Accent (highlights - draws attention)
- *
- * Golden Ratio Applied:
- * - Base hue: anchor point
- * - Secondary: Base * 1.618 (golden ratio step)
- * - Accent: Secondary * 1.618 (extended golden step)
+ * - Primary gradient: Purple to violet (#667eea → #764ba2)
+ * - Semantic colors: Modern, vibrant versions
+ * - Optimized for accessibility (WCAG AA)
  */
 
 // ============================================================================
-// LIGHT MODE - Grey & Blue Palette with Golden Ratio
+// LIGHT MODE - Modern Palette with Gradient Support
 // ============================================================================
 
 export const LIGHT_COLORS = {
-  // Primary: Light Grey (30%)
-  grey_primary: "#F5F5F5", // 95% lightness
-  grey_primary_2: "#EBEBEB", // 92% lightness (slightly darker)
+  // Primary: Light Surface
+  grey_primary: "#F8F9FC", // Cool white
+  grey_primary_2: "#F1F3F8", // Slightly darker
 
-  // Secondary: Medium Grey (70%)
-  grey_secondary: "#D1D1D1", // 82% lightness (1.618x darker than primary)
-  grey_secondary_2: "#C4C4C4", // 77% lightness
+  // Secondary: Light Grey
+  grey_secondary: "#E4E8EF", // Soft grey
+  grey_secondary_2: "#D1D6E3", // Medium grey
 
-  // Accent: Dark Grey (90% - highlights)
-  grey_accent: "#8A8A8A", // 54% lightness (1.618x darker than secondary)
-  grey_accent_2: "#5E5E5E", // 37% lightness
+  // Accent: Dark Grey for text
+  grey_accent: "#4A4F63", // Medium dark
+  grey_accent_2: "#1A1D29", // Dark (primary text)
 
-  // Blue Accents (for interactive elements)
-  blue_primary: "#2E5266", // Deep blue (dark)
-  blue_secondary: "#4A7BA7", // Medium blue (golden ratio adjustment)
-  blue_accent: "#7DA3C1", // Light blue (golden ratio highlight)
-  blue_bright: "#0066CC", // Bright blue for CTAs
+  // Blue-Violet Gradient Colors
+  blue_primary: "#4F5FCA", // Deep purple-blue
+  blue_secondary: "#667EEA", // Primary indigo
+  blue_accent: "#8B9EF5", // Light indigo
+  blue_bright: "#536DFE", // Bright blue for CTAs
 
-  // Semantic colors for accents
-  accent_sibilant: "#4A7BA7", // Blue (consonant group)
-  accent_plosive: "#5AAE61", // Green
-  accent_resonant: "#F5A623", // Orange
-  accent_vowel: "#9B59B6", // Purple
-  accent_void: "#E85D75", // Rose
+  // Violet accents
+  violet_primary: "#764BA2", // Deep violet
+  violet_secondary: "#8B5CF6", // Medium violet
+
+  // Semantic colors for glyph groups (enhanced vibrancy)
+  accent_sibilant: "#6366F1", // Indigo
+  accent_plosive: "#10B981", // Emerald green
+  accent_resonant: "#F59E0B", // Amber
+  accent_vowel: "#8B5CF6", // Violet
+  accent_void: "#EC4899", // Pink
+
+  // Gradient definitions
+  gradient_start: "#667EEA",
+  gradient_end: "#764BA2",
 };
 
 // ============================================================================
-// DARK MODE - Grey & Blue Palette with Golden Ratio
+// DARK MODE - Modern Palette with Gradient Support
 // ============================================================================
 
 export const DARK_COLORS = {
-  // Primary: Very Dark Grey/Near Black (30%)
-  grey_primary: "#0D0E14", // 5% lightness
-  grey_primary_2: "#1A1C26", // 10% lightness (slightly lighter)
+  // Primary: Very Dark Surface
+  grey_primary: "#0F1018", // Deep dark
+  grey_primary_2: "#181A26", // Slightly lighter
 
-  // Secondary: Dark Grey (70%)
-  grey_secondary: "#2A2D3A", // 16% lightness (1.618x lighter than primary)
-  grey_secondary_2: "#3D4150", // 25% lightness
+  // Secondary: Dark Grey
+  grey_secondary: "#242736", // Dark grey
+  grey_secondary_2: "#2D3142", // Medium dark grey
 
-  // Accent: Medium Grey (90% - highlights)
-  grey_accent: "#6B7280", // 44% lightness (1.618x lighter than secondary)
-  grey_accent_2: "#9CA3AF", // 63% lightness
+  // Accent: Light Grey for text
+  grey_accent: "#B8BCC8", // Medium light
+  grey_accent_2: "#E8EAF0", // Light (primary text)
 
-  // Blue Accents (for interactive elements)
-  blue_primary: "#60A5FA", // Bright blue (light)
-  blue_secondary: "#93C5FD", // Medium blue (golden ratio adjustment)
-  blue_accent: "#BFDBFE", // Light blue (golden ratio highlight)
-  blue_bright: "#3B82F6", // Bright blue for CTAs
+  // Blue-Violet Gradient Colors (brighter for dark mode)
+  blue_primary: "#6366F1", // Bright indigo
+  blue_secondary: "#818CF8", // Lighter indigo
+  blue_accent: "#A5B4FC", // Very light indigo
+  blue_bright: "#818CF8", // Bright indigo for CTAs
 
-  // Semantic colors for accents
-  accent_sibilant: "#60A5FA", // Blue (consonant group)
-  accent_plosive: "#4ADE80", // Green
-  accent_resonant: "#FBBF24", // Orange
-  accent_vowel: "#D8B4FE", // Purple
-  accent_void: "#FB7185", // Rose
+  // Violet accents
+  violet_primary: "#A78BFA", // Light violet
+  violet_secondary: "#C4B5FD", // Very light violet
+
+  // Semantic colors for glyph groups (lighter for dark mode)
+  accent_sibilant: "#818CF8", // Indigo (light)
+  accent_plosive: "#34D399", // Emerald (light)
+  accent_resonant: "#FBBF24", // Amber (light)
+  accent_vowel: "#A78BFA", // Violet (light)
+  accent_void: "#F472B6", // Pink (light)
+
+  // Gradient definitions
+  gradient_start: "#818CF8",
+  gradient_end: "#A78BFA",
 };
 
 // ============================================================================

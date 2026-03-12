@@ -141,6 +141,7 @@ function applyThemeToDOM(themeName) {
   root.style.setProperty("--radius-md", radius.md);
   root.style.setProperty("--radius-lg", radius.lg);
   root.style.setProperty("--radius-xl", radius.xl);
+  root.style.setProperty("--radius-2xl", radius["2xl"] || "1.5rem");
   root.style.setProperty("--radius-full", radius.full);
 
   // Shadows
@@ -159,7 +160,8 @@ function applyThemeToDOM(themeName) {
 
   // Fonts
   root.style.setProperty("--font-primary", typography.h1.fontFamily);
-  root.style.setProperty("--font-serif", typography.body.fontFamily);
+  root.style.setProperty("--font-logo", typography.logo.fontFamily);
+  root.style.setProperty("--font-body", typography.body.fontFamily);
   root.style.setProperty("--font-mono", typography.code.fontFamily);
 
   // Add body background and text colors

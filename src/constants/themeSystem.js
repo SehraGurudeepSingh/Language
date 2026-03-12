@@ -102,6 +102,7 @@ export const LIGHT_THEME = {
     md: "0.5rem", // 8px
     lg: "0.75rem", // 12px
     xl: "1rem", // 16px
+    "2xl": "1.5rem", // 24px
     full: "9999px", // Fully rounded
   },
 
@@ -214,6 +215,7 @@ export const DARK_THEME = {
     md: "0.5rem",
     lg: "0.75rem",
     xl: "1rem",
+    "2xl": "1.5rem",
     full: "9999px",
   },
 
