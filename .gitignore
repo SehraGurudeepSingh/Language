@@ -1,3 +1,4 @@
 node_modules
 .gitattributes
 Verify_fixes.js
+node_modules/.vite 

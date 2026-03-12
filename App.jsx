@@ -1,9 +1,114 @@
-import React, { useState, useEffect } from "react";
-import { ALL_SEGS, NODE_KEYS } from "./src/constants";
-import { GridContextProvider, ThemeProvider } from "./src/context";
-import { GridEditor, GlyphSVG, ThemeToggle, Dashboard } from "./src/components";
-import { validateAllGlyphs } from "./src/utils";
-import { useTheme } from "./src/hooks";
+import React, { useState, useEffect, useRef, useContext } from "react";
+
+// ============================================================================
+//  MODULAR IMPORTS - Constants
+// ============================================================================
+import {
+  // Legacy theme
+  THEME,
+  // Grid and glyph definitions
+  NODE_KEYS,
+  ALL_SEGS,
+  DEFAULT_GRID,
+  CONS,
+  BY_NUM,
+  BY_NAME,
+  // Phonetic hierarchy
+  PHONETIC_CORES,
+  SUBSETS,
+  VARIANTS,
+  COGNITIVE_AXES,
+  LATIN_TO_GLYPH,
+  // Genome system
+  GENOME_BITS,
+  EDGE_TYPES,
+  // Advanced theme system
+  LIGHT_COLORS,
+  DARK_COLORS,
+  NEUTRAL,
+  OPACITY,
+  applyOpacity,
+  getContrastTextColor,
+  // Typography system
+  FONTS,
+  FONT_WEIGHTS,
+  FONT_SIZES,
+  LINE_HEIGHTS,
+  LETTER_SPACING,
+  TYPOGRAPHY,
+  GOOGLE_FONTS_URL,
+  // Decoration system
+  DECORATION_GRID,
+  DECORATION_ELEMENTS,
+  DECORATION_PATTERNS,
+  POSITION_STRATEGIES,
+  GLYPH_DECORATION_MAPS,
+  // Enhanced theme system
+  LIGHT_THEME,
+  DARK_THEME,
+  getSystemTheme,
+  setTheme,
+  getTheme,
+} from "./src/constants";
+
+// ============================================================================
+//  MODULAR IMPORTS - Context
+// ============================================================================
+import {
+  GridContext,
+  GridContextProvider,
+  ThemeContext,
+  ThemeProvider,
+} from "./src/context";
+
+// ============================================================================
+//  MODULAR IMPORTS - Components
+// ============================================================================
+import {
+  GridEditor,
+  GlyphSVG,
+  WordDisplay,
+  GlyphEditor,
+  AnimatedGlyph,
+  KeyboardLayout,
+  ThemeToggle,
+  Dashboard,
+} from "./src/components";
+
+// ============================================================================
+//  MODULAR IMPORTS - Hooks
+// ============================================================================
+import {
+  useGlyphValidation,
+  useOpenType,
+  useGlyphEvolution,
+  useTheme,
+} from "./src/hooks";
+
+// ============================================================================
+//  MODULAR IMPORTS - Utilities
+// ============================================================================
+import {
+  normalizeSegment,
+  isValidSegment,
+  validateGlyph,
+  glyphKey,
+  findDuplicateGlyphs,
+  validateAllGlyphs,
+  encodeGenome,
+  decodeGenome,
+  buildPath,
+  getStrokeOrder,
+  isConnected,
+  generateRandomGlyph,
+  evolveGlyphs,
+  spiralPositions,
+  semanticToGlyphs,
+  normalizeSegmentFast,
+  ALL_SEGS_NORMALIZED,
+  SEGMENT_LOOKUP,
+  isSegmentDefined,
+} from "./src/utils";
 
 // ============================================================================
 //  MAIN APP COMPONENT
