@@ -216,6 +216,7 @@ export function GridEditor() {
                 color: "#fff",
                 border: "none",
                 fontSize: 9,
+                marginLeft: 4,
               }}
             />
           </div>

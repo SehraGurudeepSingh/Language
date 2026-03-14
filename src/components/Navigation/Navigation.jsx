@@ -50,7 +50,9 @@ export default function Navigation({ activeTab, onTabChange }) {
       fontWeight: 600,
       background: `linear-gradient(135deg, ${themeObject.colors.semantic.sibilant} 0%, ${themeObject.colors.semantic.vowel} 100%)`,
       WebkitBackgroundClip: "text",
+      backgroundClip: "text",
       WebkitTextFillColor: "transparent",
+      color: themeObject.colors.semantic.sibilant, // Fallback for browsers without -webkit-text-fill-color support
       letterSpacing: "0.08em",
       textDecoration: "none",
     },
@@ -188,6 +190,12 @@ export default function Navigation({ activeTab, onTabChange }) {
           <div className="desktop-nav">
             <button
               style={styles.ctaButton}
+              onClick={() => {
+                // Navigate to editor tab when clicked
+                if (onTabChange) {
+                  onTabChange("editor");
+                }
+              }}
               onMouseEnter={(e) => {
                 e.target.style.transform = "translateY(-2px)";
                 e.target.style.boxShadow = "0 6px 20px rgba(99, 102, 241, 0.4)";
@@ -239,7 +247,12 @@ export default function Navigation({ activeTab, onTabChange }) {
               color: "white",
               textAlign: "center",
             }}
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={() => {
+              if (onTabChange) {
+                onTabChange("editor");
+              }
+              setIsMobileMenuOpen(false);
+            }}
           >
             Get Started
           </button>
